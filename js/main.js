@@ -477,7 +477,7 @@ function initContactForm() {
         
         // Simulate form submission (replace with actual API call)
         try {
-            await simulateFormSubmission();
+            await sendMessage();
             
             // Show success message
             form.style.display = 'none';
@@ -500,10 +500,30 @@ function initContactForm() {
         }
     });
     
-    function simulateFormSubmission() {
-        return new Promise((resolve) => {
-            setTimeout(resolve, 2000);
+    // Sends the message to the owner's inbox through Web3Forms (no backend needed).
+    // Get a free access key at https://web3forms.com (enter morangekapawa688@gmail.com) and paste it below.
+    const WEB3FORMS_ACCESS_KEY = 'd098dc87-72f4-4803-bfc5-61e5613060ff';
+
+    async function sendMessage() {
+        if (WEB3FORMS_ACCESS_KEY === 'YOUR_ACCESS_KEY_HERE') {
+            throw new Error('Web3Forms access key is not set in js/main.js');
+        }
+        const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+                access_key: WEB3FORMS_ACCESS_KEY,
+                name: form.name.value.trim(),
+                email: form.email.value.trim(),
+                subject: `Portfolio: ${form.subject.value.trim()}`,
+                message: form.message.value.trim(),
+                from_name: 'Portfolio Contact Form'
+            })
         });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Message could not be sent');
+        }
     }
 }
 

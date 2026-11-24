@@ -25,22 +25,29 @@
    ======================================== */
 :root {
     /* Colors - Light Theme */
-    --primary-color: #6366f1;
-    --primary-dark: #4f46e5;
-    --primary-light: #818cf8;
-    --secondary-color: #0ea5e9;
-    --accent-color: #f59e0b;
+    /* Editorial Studio palette */
+    --primary-color: #A84623;   /* terracotta, AA-safe on paper for text and white-on-fill */
+    --primary-dark: #8F3A1B;
+    --primary-light: #C85A32;   /* Burnt Terracotta: hovers, highlights */
+    --secondary-color: #3D5A45; /* Olive Bark */
+    --accent-color: #C85A32;
     
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --bg-tertiary: #f1f5f9;
+    --bg-primary: #F6F1EA;      /* Warm Oat */
+    --bg-secondary: #EFE7DC;    /* Sandstone */
+    --bg-tertiary: #EFE7DC;
     
-    --text-primary: #1e293b;
-    --text-secondary: #475569;
-    --text-tertiary: #94a3b8;
+    --text-primary: #1F1A17;    /* Rich Espresso */
+    --text-secondary: #5C534E;  /* Warm Charcoal */
+    --text-tertiary: #5C534E;
     
-    --border-color: #e2e8f0;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-color: #DCD2C4;    /* Warm Stone */
+    --shadow-color: rgba(31, 26, 23, 0.1);
+
+    /* Aliases used by the skills ledger */
+    --border-hairline: var(--border-color);
+    --text-muted: var(--text-secondary);
+    --accent-secondary: var(--secondary-color);
+    --font-mono: var(--font-code);
     
     /* Typography */
     --font-primary: 'Poppins', sans-serif;
@@ -95,15 +102,19 @@
 
 /* Dark Theme */
 [data-theme="dark"] {
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-tertiary: #334155;
+    --primary-color: #E8957A;
+    --primary-dark: #C85A32;
+    --secondary-color: #8DB596;
+
+    --bg-primary: #1F1A17;
+    --bg-secondary: #2A2420;
+    --bg-tertiary: #352D28;
     
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-tertiary: #64748b;
+    --text-primary: #F6F1EA;
+    --text-secondary: #D9CFC3;
+    --text-tertiary: #B5A99C;
     
-    --border-color: #334155;
+    --border-color: #4A403A;
     --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -231,12 +242,12 @@ textarea {
 .btn-primary {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: white;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 4px 15px rgba(200, 90, 50, 0.4);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 6px 20px rgba(200, 90, 50, 0.5);
 }
 
 .btn-outline {
@@ -366,7 +377,7 @@ textarea {
 .nav-link:hover,
 .nav-link.active {
     color: var(--primary-color);
-    background: rgba(99, 102, 241, 0.1);
+    background: rgba(200, 90, 50, 0.1);
 }
 
 .nav-close {
@@ -848,7 +859,7 @@ textarea {
 }
 
 .info-value.available {
-    color: #10b981;
+    color: var(--secondary-color);
 }
 
 .about-buttons {
@@ -903,61 +914,73 @@ textarea {
     gap: var(--spacing-xl);
 }
 
-.skill-item {
-    display: flex;
-    gap: var(--spacing-md);
-    align-items: flex-start;
+/* Skills ledger: 3 editorial columns, no progress bars */
+.skills-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xl);
 }
 
-.skill-icon {
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-primary);
+.skills-columns .skills-category {
+    padding: var(--spacing-xl);
     border-radius: var(--radius-md);
-    color: var(--primary-color);
-    font-size: var(--fs-xl);
-    flex-shrink: 0;
-    border: 1px solid var(--border-color);
 }
 
-.skill-info {
-    flex: 1;
-}
-
-.skill-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.skills-columns .category-header {
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-hairline);
     margin-bottom: var(--spacing-sm);
 }
 
+.skill-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border-hairline);
+}
+
+.skill-row:last-child {
+    border-bottom: 0;
+}
+
 .skill-name {
+    font-family: var(--font-primary);
     font-weight: 500;
     color: var(--text-primary);
 }
 
-.skill-percentage {
-    font-size: var(--fs-sm);
-    color: var(--primary-color);
-    font-weight: 600;
+.skill-level {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    white-space: nowrap;
 }
 
-.skill-bar {
-    height: 8px;
-    background: var(--bg-tertiary);
-    border-radius: var(--radius-full);
-    overflow: hidden;
+.level-expert {
+    color: var(--accent-secondary);
+    background: rgba(61, 90, 69, 0.12);
+    border: 1px solid rgba(61, 90, 69, 0.3);
 }
 
-.skill-progress {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    border-radius: var(--radius-full);
-    width: 0;
-    transition: width 1.5s ease-out;
+.level-advanced {
+    color: var(--text-primary);
+    border: 1px solid var(--border-hairline);
+    background: rgba(31, 26, 23, 0.04);
+}
+
+.level-intermediate {
+    color: var(--text-muted);
+    border: 1px solid var(--border-hairline);
+}
+
+[data-theme="dark"] .level-expert { background: rgba(141, 181, 150, 0.14); border-color: rgba(141, 181, 150, 0.35); }
+[data-theme="dark"] .level-advanced { background: rgba(246, 241, 234, 0.06); }
+
+@media (max-width: 992px) {
+    .skills-columns { grid-template-columns: 1fr; }
 }
 
 /* Tools Grid */
@@ -1081,7 +1104,7 @@ textarea {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(99, 102, 241, 0.9);
+    background: rgba(200, 90, 50, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1136,7 +1159,7 @@ textarea {
     font-size: var(--fs-xs);
     font-weight: 600;
     color: var(--primary-color);
-    background: rgba(99, 102, 241, 0.1);
+    background: rgba(200, 90, 50, 0.1);
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
     margin-bottom: var(--spacing-sm);
@@ -1241,7 +1264,7 @@ textarea {
     background: var(--primary-color);
     border: 3px solid var(--bg-primary);
     border-radius: var(--radius-full);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 0 0 4px rgba(200, 90, 50, 0.2);
 }
 
 .timeline-content {
@@ -1262,7 +1285,7 @@ textarea {
     font-size: var(--fs-sm);
     font-weight: 600;
     color: var(--primary-color);
-    background: rgba(99, 102, 241, 0.1);
+    background: rgba(200, 90, 50, 0.1);
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
     margin-bottom: var(--spacing-sm);
@@ -1610,7 +1633,7 @@ textarea {
 
 .form-input:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 4px rgba(200, 90, 50, 0.1);
 }
 
 .form-input:focus + i,
@@ -1626,13 +1649,13 @@ textarea {
 .error-message {
     display: block;
     font-size: var(--fs-xs);
-    color: #ef4444;
+    color: #A12A1B;
     margin-top: var(--spacing-xs);
     min-height: 18px;
 }
 
 .form-input.error {
-    border-color: #ef4444;
+    border-color: #A12A1B;
 }
 
 .btn-submit {
@@ -1684,7 +1707,7 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: linear-gradient(135deg, #3D5A45, #2E4635);
     border-radius: var(--radius-full);
     color: white;
     font-size: var(--fs-3xl);
@@ -1870,7 +1893,7 @@ textarea {
 
 .back-to-top:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 10px 25px rgba(200, 90, 50, 0.4);
 }
 
 /* ========================================
